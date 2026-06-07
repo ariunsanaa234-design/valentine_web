@@ -89,6 +89,7 @@
             "Дахиад нэг бодоод үз дээ...",
             "Чи намайг гомдоож байна...",
             "Би бүр маш маш их гуниглана шүү... 😭"
+            
         ];
 
         const yesBtn = document.getElementById('yesBtn');
@@ -106,18 +107,23 @@
                 noBtn.innerText = noPhrases[noPhrases.length - 1];
             }
 
-            // 2. "Тэгье" товчлуурыг томруулах
-            let yesSize = 1.2 + (noCount * 0.4); // Дарж нэмэгдэх тусам томорно
+            // 👇 ЭНЭ ХЭСГИЙГ ЯГ ИНГЭЖ ЗАСААРАЙ (ОГЦОМ ТОМРОХ ХЭСЭГ) 👇
+            // Дарж нэмэгдэх тусам хэмжээ нь үржвэрээр маш хурдан томорно
+            let yesSize = 1.2 * Math.pow(1.8, noCount); 
             yesBtn.style.fontSize = `${yesSize}rem`;
-            yesBtn.style.padding = `${12 + (noCount * 6)}px ${30 + (noCount * 12)}px`;
-
-            // 3. "Үгүй" товчлуурыг жижигсгэх (хэт жижиг болохоос сэргийлнэ)
-            let noSize = Math.max(1.2 - (noCount * 0.15), 0.5);
-            noBtn.style.fontSize = `${noSize}rem`;
-            noBtn.style.padding = `${Math.max(12 - noCount, 5)}px ${Math.max(30 - noCount*2, 10)}px`;
             
-            // Хэрэв маш олон дараад устгах хэмжээнд хүрвэл "Үгүй"-г алга болгож болно
-            if(noCount > 8) {
+            // Доторх зайг (padding) нь дагаж томруулах
+            let paddingVert = 12 + (noCount * 20); // Дээш доош хэмжээ
+            let paddingHoriz = 30 + (noCount * 40); // Баруун зүүн хэмжээ
+            yesBtn.style.padding = `${paddingVert}px ${paddingHoriz}px`;
+
+            // 3. "Үгүй" товчлуурыг жижигсгэх
+            let noSize = Math.max(1.2 - (noCount * 0.2), 0.4);
+            noBtn.style.fontSize = `${noSize}rem`;
+            noBtn.style.padding = `${Math.max(12 - noCount*2, 4)}px ${Math.max(30 - noCount*4, 8)}px`;
+            
+            // "Үгүй" товчлуур хэтэрхий жижиг болж харагдахгүй болбол 5 дараад л алга болгох
+            if(noCount > 5) {
                 noBtn.style.display = 'none';
             }
         }
