@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Миний Валентин болох уу?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffe4e1;
+            text-align: center;
+        }
+
+        h1 {
+            color: #b03060;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .gif-container {
+            height: 200px;
+            margin-bottom: 30px;
+        }
+
+        .gif-container img {
+            height: 100%;
+            border-radius: 15px;
+        }
+
+        .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 90%;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #yesBtn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">Миний Валентин болох уу? ❤️</h1>
+
+    <div class="gif-container">
+        <!-- Энд зургуудын линкийг тавина -->
+        <img id="gifImage" src="https://media.tenor.com/w8y8qU_2Z24AAAAi/cute-cat.gif" alt="Cute Cat">
+    </div>
+
+    <div class="buttons" id="btnContainer">
+        <button id="yesBtn" onclick="selectYes()">Тэгье</button>
+        <button id="noBtn" onclick="selectNo()">Үгүй</button>
+    </div>
+
+    <script>
+        let noCount = 0;
+        
+        // "Үгүй" гэж дарах үед гарах бичнүүдийн жагсаалт (зураг дээрх шиг)
+        const noPhrases = [
+            "Үгүй",
+            "Итгэлтэй байна уу? 🥺",
+            "Бүүр итгэлтэй юу? 💔",
+            "Дахиад нэг бодоод үз дээ...",
+            "Чи намайг гомдоож байна...",
+            "Би бүр маш маш их гуниглана шүү... 😭"
+        ];
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+        const gifImage = document.getElementById('gifImage');
+
+        function selectNo() {
+            noCount++;
+            
+            // 1. "Үгүй" товчны бичгийг солих
+            if (noCount < noPhrases.length) {
+                noBtn.innerText = noPhrases[noCount];
+            } else {
+                noBtn.innerText = noPhrases[noPhrases.length - 1];
+            }
+
+            // 2. "Тэгье" товчлуурыг томруулах
+            let yesSize = 1.2 + (noCount * 0.4); // Дарж нэмэгдэх тусам томорно
+            yesBtn.style.fontSize = `${yesSize}rem`;
+            yesBtn.style.padding = `${12 + (noCount * 6)}px ${30 + (noCount * 12)}px`;
+
+            // 3. "Үгүй" товчлуурыг жижигсгэх (хэт жижиг болохоос сэргийлнэ)
+            let noSize = Math.max(1.2 - (noCount * 0.15), 0.5);
+            noBtn.style.fontSize = `${noSize}rem`;
+            noBtn.style.padding = `${Math.max(12 - noCount, 5)}px ${Math.max(30 - noCount*2, 10)}px`;
+            
+            // Хэрэв маш олон дараад устгах хэмжээнд хүрвэл "Үгүй"-г алга болгож болно
+            if(noCount > 8) {
+                noBtn.style.display = 'none';
+            }
+        }
+
+        function selectYes() {
+            // "Тэгье" дээр дарахад гарах үр дүн (image_7400d5.png шиг)
+            question.innerText = "Зөвшөөрнө гэдгийг чинь мэдэж байсан юм аа! 🥰";
+            gifImage.src = "https://media.tenor.com/gU_1G8Z7cl0AAAAi/milk-and-mocha.gif"; // Тэврэлдэж буй зураг
+            document.getElementById('btnContainer').style.display = 'none'; // Товчлууруудыг нуух
+        }
+    </script>
+</body>
+</html>
